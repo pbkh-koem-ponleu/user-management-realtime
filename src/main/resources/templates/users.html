@@ -14,6 +14,7 @@
 <div class="container">     
   <table class="table table-dark table-hover">
  <h1>User Management System</h1>
+    <button class="btn btn-warning" id="createUser">Generate New User</button>
     <thead>
       <tr>
         <th>id</th>
@@ -30,13 +31,17 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function(){
-      get();
+      // $('.dlUser').click(function(){
+      //   deleteUser(this.id);
+      //   $(this).parent('tr').remove();
+      // });
+      $('#createUser').click(function() {
+        create();
+      })
   });
-  function click() {
-    $('button .dlUser').click(function(){
-      alert("hello");
-    });
-  }
+  
+  get();
+  
   function get() {
       $.ajax({
           method : 'GET', 
@@ -54,17 +59,55 @@
                   <td>`+response[i].gender +`</td>
                   <td>`+response[i].email +`</td>
                   <td>`+response[i].address +`</td>
-                  <td><button class="btn btn-danger col-md-12 dlUser" id="`+ response[i].id +`">delete</button></td>
+                  <td><button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ response[i].id +`)" id="`+ response[i].id +`">delete</button></td>
                     </tr>
                   `;
-                  
-      $('button .dlUser').click(function(){
-          alert("hello");
-        });
-                  $("#users").append($body);
+                $("#users").append($body);
             }
           },
           error : function(error){
+          }
+      });
+  }
+
+  function create() {
+      $.ajax({
+          method : 'POST', 
+          url : "http://localhost:2020/users", 
+          beforeSend: function(){
+              console.log("sending...");
+          },
+          timeout: 5000,
+          success:function(response){
+              $body = `
+                    <tr>
+                  <td>`+response.id +`</td>
+                  <td>`+response.name +`</td>
+                  <td>`+response.gender +`</td>
+                  <td>`+response.email +`</td>
+                  <td>`+response.address +`</td>
+                  <td><button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ response.id +`)" id="`+ response.id +`">delete</button></td>
+                    </tr>
+                  `;
+                $("#users").append($body);
+          },
+          error : function(error){
+          }
+      });
+  }
+  function deleteUser($id) {
+    $.ajax({
+          method : 'DELETE', 
+          url : "http://localhost:2020/users/"+$id,
+          beforeSend: function(){
+              console.log("sending...");
+          },
+          timeout: 5000,
+          success:function(response){
+            alert(response);
+          },
+          error : function(error) {
+            alert(error);
           }
       });
   }
