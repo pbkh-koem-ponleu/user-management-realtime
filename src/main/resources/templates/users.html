@@ -51,6 +51,7 @@
           },
           timeout: 5000,
           success:function(response){
+        	console.log("completed")
             for(i = 0; i<response.length; i++) {
               $body = `
                     <tr>
@@ -79,6 +80,7 @@
           },
           timeout: 5000,
           success:function(response){
+        	  console.log("completed")
               $body = `
                     <tr>
                   <td>`+response.id +`</td>
@@ -104,6 +106,7 @@
           },
           timeout: 5000,
           success:function(response){
+        	console.log("completed")
             alert(response);
           },
           error : function(error) {
