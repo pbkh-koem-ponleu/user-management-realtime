@@ -58,4 +58,10 @@ public class UserSocketIOController {
 		this.socketIOServer.getBroadcastOperations().sendEvent("removeIdEvent", userService.delete(_id));
 		_ack.sendAckData("Remove!");
 	}
+	
+	@OnEvent("updateButton")
+	public void updateButton(SocketIOClient client, int _id, AckRequest _ack) {
+		this.socketIOServer.getBroadcastOperations().sendEvent("updateEvent", userService.update(_id));
+		_ack.sendAckData("update!");
+	}
 }
