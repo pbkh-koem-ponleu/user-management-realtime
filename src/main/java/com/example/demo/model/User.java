@@ -1,21 +1,24 @@
 package com.example.demo.model;
 
-public class User {
-	int id;
-	
-	String name;
-	
-	String gender;
-	
-	String email;
-	
-	String address;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
-	public int getId() {
+@JsonPOJOBuilder
+public class User {
+	private Long id;
+	
+	private String name;
+	
+	private String gender;
+	
+	private String email;
+	
+	private String address;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -65,13 +68,18 @@ public class User {
 		this.address 	= _user.address;
 	}
 
-	public User(int id, String name, String gender, String email, String address) {
+	public User(Long id, String name, String gender, String email, String address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.email = email;
 		this.address = address;
+	}
+	
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	

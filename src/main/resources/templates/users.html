@@ -8,6 +8,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 </head>
 <body>
 
@@ -15,6 +19,7 @@
   <table class="table table-dark table-hover">
  <h1>User Management System</h1>
     <button class="btn btn-warning" id="createUser">Generate New User</button>
+    <button class="btn btn-warning" id="removeAll">Remove All</button>
     <thead>
       <tr>
         <th>id</th>
@@ -29,15 +34,72 @@
     </tbody>
   </table>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+	var serverAddress = /*[[${@environment.getProperty('server.address')}]]*/ 'default';
+	var serverport = /*[[${@environment.getProperty('server.port')}]]*/ 'default';
+	
+	var socketIOPort = /*[[${@environment.getProperty('socket.io.port')}]]*/ 'default';
+	var socketAddress = /*[[${@environment.getProperty('socket.io.host')}]]*/ 'default';
+	var server = socketAddress+":"+socketIOPort;
+	var endpoint = "http://"+serverAddress+":"+serverport;
+	var socket =  io.connect(server);
   $(document).ready(function(){
+	  
       // $('.dlUser').click(function(){
       //   deleteUser(this.id);
       //   $(this).parent('tr').remove();
       // });
+      
+      // ========================== create user socketio event ==============================
       $('#createUser').click(function() {
-        create();
-      })
+    	  $user = {
+  			    name  : "Doe",
+  			    gender      : "male",
+  			    email  : "blue@gmail.com",
+  			    address: "PP"
+  			};
+    	  socket.emit('createUserButton', $user);
+      });
+      socket.on('createUserEvent', function(data) {
+          $body = `
+              <tr>
+	            <td>`+data.id +`</td>
+	            <td>`+data.name +`</td>
+	            <td>`+data.gender +`</td>
+	            <td>`+data.email +`</td>
+	            <td>`+data.address +`</td>
+	            <td><button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ data.id +`)" id="`+ data.id +`">delete</button></td>
+              </tr>
+            `;
+          $("#users").append($body);
+      });
+      // ========================== end create user socketio event ==============================
+        
+      
+      // ========================== remove all users socketio event ==============================
+      $("#removeAll").click(function() {
+    	 socket.emit('removeAllButton', 'remove...');
+      });
+      
+      socket.on('removeAllEvent', function(data) {
+          console.log(data);
+    	  $("#users").empty();
+      });
+      // ========================== end remove all users socketio event ==============================
+    	  
+
+      // $(".dlUser").click(function() {
+    	  // console.log("heleo");
+    	  // socket.emit('removeIdEvent', id);
+      // });
+      socket.on('removeIdEvent', function(data) {
+    	    console.log(data);
+    	    var id = data.split(" ")[1];
+    	    $td = $(".dlUser#"+id).parent("td");
+    	    $td.parent('tr').fadeOut(200);
+      });
+      
+      
   });
   
   get();
@@ -45,7 +107,7 @@
   function get() {
       $.ajax({
           method : 'GET', 
-          url : "http://localhost:2020/users", 
+          url : endpoint+"/users", 
           beforeSend: function(){
               console.log("sending...");
           },
@@ -88,7 +150,7 @@
                   <td>`+response.gender +`</td>
                   <td>`+response.email +`</td>
                   <td>`+response.address +`</td>
-                  <td><button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ response.id +`)" id="`+ response.id +`">delete</button></td>
+                  <td><button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ response.id +`)"  id="`+ response.id +`">delete</button></td>
                     </tr>
                   `;
                 $("#users").append($body);
@@ -97,22 +159,9 @@
           }
       });
   }
-  function deleteUser($id) {
-    $.ajax({
-          method : 'DELETE', 
-          url : "http://localhost:2020/users/"+$id,
-          beforeSend: function(){
-              console.log("sending...");
-          },
-          timeout: 5000,
-          success:function(response){
-        	console.log("completed")
-            alert(response);
-          },
-          error : function(error) {
-            alert(error);
-          }
-      });
+  function deleteUser(id) {
+      socket.emit('removeIdButton', id);
+      console.log(id);
   }
 </script>
 

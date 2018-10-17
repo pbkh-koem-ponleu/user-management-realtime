@@ -21,7 +21,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	private int id = 1;
+	private Long id = 1l;
 	
 	@RequestMapping("/users")
 	public List<User> get() {

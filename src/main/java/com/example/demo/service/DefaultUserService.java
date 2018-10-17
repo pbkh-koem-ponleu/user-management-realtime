@@ -3,25 +3,32 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepository;
 
 @Component
 public class DefaultUserService implements UserService {
-
+	
+	@Autowired
+	UserRepository userRepository;
+	
 	private List<User> users = new ArrayList<>();
+	private int id = 1;
 	
 	@Override
 	public List<User> get() {
-		return this.users;
+		return this.userRepository.get();
 	}
 
 	@Override
 	public User create(User _user) {
-		this.users.add(_user);
-		return _user;
+//		_user.setId(id);
+//		id++;
+//		this.users.add(_user);
+		return this.userRepository.create(_user);
 	}
 
 	@Override
@@ -31,13 +38,19 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	public String delete(int _id) {
-		for (int i = 0; i < users.size(); i++) {
-			if (users.get(i).getId() == _id) {
-				users.remove(i);
-				return "success removed " + _id;
-			}
-		}
-		return "not found";
+//		for (int i = 0; i < users.size(); i++) {
+//			if (users.get(i).getId() == _id) {
+//				users.remove(i);
+//				return "success removed " + _id;
+//			}
+//		}
+		return userRepository.delete(_id);
+	}
+	
+	@Override
+	public String deleteUsers() {
+//		users.clear();
+		return this.userRepository.deleteAll();
 	}
 
 }

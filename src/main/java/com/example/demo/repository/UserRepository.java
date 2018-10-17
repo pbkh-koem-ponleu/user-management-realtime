@@ -1,10 +1,10 @@
-package com.example.demo.service;
+package com.example.demo.repository;
 
 import java.util.List;
 
 import com.example.demo.model.User;
 
-public interface UserService {
+public interface UserRepository {
 	public List<User> get();
 	
 	public User create(User _user);
@@ -13,5 +13,5 @@ public interface UserService {
 	
 	public String delete(int _id);
 	
-	public String deleteUsers();
+	public String deleteAll();
 }
