@@ -31,6 +31,144 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
+		@import url(http://fontawesome.io/assets/font-awesome/css/font-awesome.css);
+		* {
+		    margin:0px;
+		    padding:0px;
+		}
+		body {
+		    font-size:14px;
+		    font-family: 'Lato', sans-serif;
+		}
+		.layout {
+		    padding: 2%;
+		}
+		.open-popup {
+		    cursor: pointer;
+		    color: #888;
+		}
+		.overlay {
+		    width: 100%;
+		    height: 100%;
+		    position: fixed;
+		    z-index: 100;
+		    left: 0;
+		    top: 0;
+		    text-align: center;
+		    white-space: nowrap;
+		    display:none;
+		    -webkit-transition: all 0.4s ease;
+		    transition: all 0.4s ease;
+		}
+		.overlay .popup {
+		    background: #fff;
+		    display: inline-block;
+		    white-space: normal;
+		    text-align: left;
+		    vertical-align: middle;
+		    position: relative;
+		    -webkit-transition: all 0.4s ease;
+		    transition: all 0.4s ease;
+		    margin-top: -50px;
+		}
+		.overlay::before, .overlay::after {
+		    height: 100%;
+		    content: "";
+		    display: inline-block;
+		    vertical-align: middle;
+		}
+		.overlay.shown {
+		    display:block;
+		}
+		.overlay.shown .popup {
+		    margin-top: 0;
+		}
+		.overlay--bg-black {
+		    background: rgba(0, 0, 0, 0.7);
+		}
+		.overlay--bg-white {
+		    background: rgba(255, 255, 255, 0.7);
+		}
+		.popup-close {
+		    position: absolute;
+		    width: 20px;
+		    height: 20px;
+		    display: block;
+		    top: 8px;
+		    right: 5px;
+		    cursor: pointer;
+		    opacity: 0.7;
+		}
+		.popup-close::before, .popup-close::after {
+		    content: '';
+		    position: absolute;
+		    display: block;
+		    height: 2px;
+		    margin-top: -1px;
+		    top: 50%;
+		    left: 3px;
+		    right: 3px;
+		    background: #555;
+		}
+		.popup-close::before {
+		    -webkit-transform: rotate(45deg);
+		    -ms-transform: rotate(45deg);
+		    transform: rotate(45deg);
+		}
+		.popup-close::after {
+		    -webkit-transform: rotate(-45deg);
+		    -ms-transform: rotate(-45deg);
+		    transform: rotate(-45deg);
+		}
+		.popup-close:hover {
+		    opacity: 1;
+		}
+		.pop_head{
+		    padding: 9px 10px;
+		    background: #00ce91;
+		    color: #fff;
+		    font-weight: 500;
+		}
+		.pop_body {
+		    font-size: 14px;
+		    padding: 10px 10px;
+		    border-bottom: 1px solid #E0E0E0;
+		    overflow: auto;
+		    max-height: 350px;
+		}
+		.text-right{
+		    text-align:right;
+		}
+		.pop_footer {
+		    padding: 5px 10px;
+		}
+		.btn_yes {
+		    background: #81CE84;
+		    padding: 5px 15px;
+		    border: none;
+		    font-family: inherit;
+		    color: #fff;
+		    border-radius: 3px;
+		    cursor: pointer;
+		    outline: none;
+		}
+		.btn_no{
+		    background: #FD7E7E;
+		    padding: 5px 15px;
+		    border: none;
+		    font-family: inherit;
+		    color: #fff;
+		    border-radius: 3px;
+		    cursor: pointer;
+		    outline: none;
+		}
+		
+		.form-margin-20 {
+		  margin-bottom: 20px;
+		}
+    </style>
 
 </head>
 <body>
@@ -45,72 +183,11 @@
                         <a href="index.html"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                     </li>
                     <li class="menu-title">UI elements</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-cogs"></i>Components</a>
-                        <ul class="sub-menu children dropdown-menu">                            <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
-                            <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
-                            <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
-                            
-                            <li><i class="fa fa-id-card-o"></i><a href="ui-cards.html">Cards</a></li>
-                            <li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
-                            <li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
-                            <li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
-                            <li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
-                            <li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
-                            <li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
-                        </ul>
+                    <li class="active">
+                        <a href="/me/users"> <i class="menu-icon ti-user"></i>USERS </a>
                     </li>
-                    <li class="menu-item-has-children active dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tables</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
-                            <li><i class="fa fa-table"></i><a href="tables-data.html">Data Table</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-th"></i>Forms</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
-                            <li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="menu-title">Icons</li><!-- /.menu-title -->
-
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tasks"></i>Icons</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Font Awesome</a></li>
-                            <li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themefy Icons</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="widgets.html"> <i class="menu-icon ti-email"></i>Widgets </a>
-                    </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-bar-chart"></i>Charts</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">Chart JS</a></li>
-                            <li><i class="menu-icon fa fa-area-chart"></i><a href="charts-flot.html">Flot Chart</a></li>
-                            <li><i class="menu-icon fa fa-pie-chart"></i><a href="charts-peity.html">Peity Chart</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-area-chart"></i>Maps</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Maps</a></li>
-                            <li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu-title">Extras</li><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-glass"></i>Pages</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-                            <li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
-                            <li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
-                        </ul>
+                    <li class="">
+                        <a href="/web/users"> <i class="menu-icon ti-user"></i>USERS FRONT </a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
@@ -237,7 +314,7 @@
                                <div class="row">
                                 <div class="col-md-8"><strong class="card-title">User Management Realtime</strong></div>
                                  <div class="col-md-2 col-sm-2">
-                                     <button class="btn btn-warning col-md-12" id="createUser" data-toggle="modal" data-target="#upModal"><i class="fa fa-plus"></i></button>
+                                     <button class="btn btn-success col-md-12 open-popup" id="createUser" data-toggle="modal" data-target="#upModal"><i class="fa fa-plus"></i></button>
                                  </div>
                                  <div class="col-md-2 col-sm-2">
                                      <button class="btn btn-danger col-md-12" id="removeAll"><i class="fa fa-trash"></i> All</button>
@@ -259,28 +336,26 @@
 							        <tbody id="users">
 							        </tbody>
 							      </table>
-							  
-							      <!-- Modal -->
-							      <div class="modal fade" id="upModal" role="dialog">
-							        <div class="modal-dialog modal-md">
-							          <div class="modal-content">
-							            <div class="modal-header">
-							              <button type="button" class="close" data-dismiss="modal">&times;</button>
-							            </div>
-							            <div class="modal-body" id="modalUserData">
-							                
-							                
-							            </div>
-							            <div class="modal-footer" id="footerButton">
-							              
-							            </div>
-							          </div>
-							        </div>
-							      </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- modal popup when create and update user -->
+				<div class="overlay overlay--bg-black">
+				  <section class="popup" style="width: 40%;"> 
+				        <span class="popup-close"></span> 
+				        <h3 class="pop_head">USER</h3>
+				        <div class="pop_body container">
+				            <div  id="modalUserData" class="container">
+				            
+				            </div>
+				            <!-- when create or update will generate HTML form here -->
+				        </div>
+				        <div class="pop_footer text-right" id="footerButton">
+				                <!-- when create or update will generate HTML button here -->
+				        </div>
+				  </section>
+				</div>
+				<!-- end modal popup when create and update user -->
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->
@@ -340,7 +415,7 @@
                 <td>
                 <div class="row">
                   <div class="col-md-6">
-                    <button class="btn btn-warning col-md-12 upUser" data-toggle="modal" data-target="#upModal" onClick="openModalUpdate(`+ data.id +`)" id="up`+ data.id +`"><i class="fa fa-edit"></i></button>
+                    <button class="btn btn-success col-md-12 upUser open-popup" data-toggle="modal" data-target="#upModal" onClick="openModalUpdate(`+ data.id +`)" id="up`+ data.id +`"><i class="fa fa-edit"></i></button>
                   </div>
                   <div class="col-md-6">
                     <button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ data.id +`)" id="dl`+ data.id +`"><i class="fa fa-trash"></i></button>
@@ -409,7 +484,7 @@
                   <td>
                     <div class="row">
                       <div class="col-md-6">
-                          <button class="btn btn-warning col-md-12 upUser" data-toggle="modal" data-target="#upModal" onClick="openModalUpdate(${response[i].id})" id="up${response[i].id}"><i class="fa fa-edit"></i></button>
+                          <button class="btn btn-success col-md-12 upUser open-popup" onClick="openModalUpdate(${response[i].id})" id="up${response[i].id}"><i class="fa fa-edit"></i></button>
                       </div>
                       <div class="col-md-6">
                           <button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ response[i].id +`)" id="dl`+ response[i].id +`"><i class="fa fa-trash"></i></button>
@@ -459,6 +534,7 @@
   }
   
   function openModalUpdate(id) {
+	  console.log(id);
       name = '';
       gender = '';
       email = '';
@@ -469,26 +545,44 @@
           email = $(`#user${id} .email`).html();
           address = $(`#user${id} .address`).html();  
       }
+      selectedGender = gender=='female'?'female':'male';
+      notSelectedGender = gender=='female'?'male':'female';
       $body = 
           `
-            <input type="text" id="name" class="form-control" placeholder="name" value="${name}">
-            <hr>
-            <input type="text" id="gender" class="form-control" placeholder="gender" value="${gender}">
-            <hr>
-            <input type="text" id="email" class="form-control" placeholder="email" value="${email}">
-            <hr>
-            <input type="text" id="address" class="form-control" placeholder="address" value="${address}">
+            <input type="text" id="name" class="form-control form-margin-20" placeholder="name" value="${name}">
+            <select class="form-control form-margin-20" id="gender">
+	            <option selected>${selectedGender}</option>
+	            <option >${notSelectedGender}</option>
+	          </select>
+            <input type="text" id="email" class="form-control form-margin-20" placeholder="email" value="${email}">
+            <input type="text" id="address" class="form-control form-margin-20" placeholder="address" value="${address}">
           `;
         $("#modalUserData").html($body);
       $bodyFooter =
           `
-          <button type="button" class="btn btn-warning" id="${id}==null?createUserBtn:upUser" onClick="${id}==null?createUser():upUser(${id})" data-dismiss="modal"><i class="fa fa-edit"></i></button>
-          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i></button>
+          <button type="button" class="btn btn-success btn_yes col-sm-1" id="${id}==null?createUserBtn:upUser" onClick="${id}==null?createUser():upUser(${id})"><i class="fa fa-edit"></i></button>
+          <button type="button" class="btn btn-default btn_no col-sm-1"><i class="fa fa-close"></i></button>
           `;
       $("#footerButton").html($bodyFooter);
   }
 </script>
-
+<script type="text/javascript">
+	$(document).on('click', '.open-popup', function() {
+		  $('.overlay').addClass('shown');
+		});
+	
+		$('.popup-close').on('click', function() {
+		  $('.overlay').removeClass('shown');
+		});
+		$(document).on('click', '.btn_yes, .btn_no', function(event) {
+		  $('.overlay').removeClass('shown');
+		});
+		$(document).on('keyup', function(event) {
+		  if (event.which == 27) { // esc
+		    $('.overlay').removeClass('shown');
+		  };
+		});
+</script>
 
 </body>
 </html>

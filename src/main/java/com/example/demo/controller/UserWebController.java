@@ -13,6 +13,11 @@ public class UserWebController {
 	@Value("${socket.io.port}")
 	Integer socketIOPort;
 	
+	@RequestMapping("/")
+	public String index() {
+		return "redirect:/me/users";
+	}
+	
 	@RequestMapping("/me/users")
 	public String user() {
 		return "tables-basic";
