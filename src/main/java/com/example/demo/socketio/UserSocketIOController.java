@@ -60,8 +60,8 @@ public class UserSocketIOController {
 	}
 	
 	@OnEvent("updateButton")
-	public void updateButton(SocketIOClient client, int _id, AckRequest _ack) {
-		this.socketIOServer.getBroadcastOperations().sendEvent("updateEvent", userService.update(_id));
+	public void updateButton(SocketIOClient client, Long _id, User _user, AckRequest _ack) {
+		this.socketIOServer.getBroadcastOperations().sendEvent("updateEvent", userService.update(_id, _user));
 		_ack.sendAckData("update!");
 	}
 }

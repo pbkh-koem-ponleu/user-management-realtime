@@ -9,7 +9,7 @@ public interface UserService {
 	
 	public User create(User _user);
 	
-	public User update(int _id);
+	public User update(Long _id, User _user);
 	
 	public String delete(int _id);
 	

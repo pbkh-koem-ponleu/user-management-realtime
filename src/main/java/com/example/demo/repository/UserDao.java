@@ -19,7 +19,7 @@ public class UserDao implements UserRepository {
 	
 	@Override
 	public List<User> get() {
-		String query = "SELECT * FROM \"user\"";
+		String query = "SELECT * FROM \"user\" ORDER BY id";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		return this.jdbcTemplate.query(query, params, this.rowMapper());
 	}
@@ -37,9 +37,16 @@ public class UserDao implements UserRepository {
 	}
 
 	@Override
-	public User update(int _id) {
-		// TODO Auto-generated method stub
-		return null;
+	public User update(Long _id, User _user) {
+		String query = "update \"user\" set name = :name, gender = :gender, email = :email, address = :address WHERE id = :id "
+				+ "RETURNING id, name, gender, email, address";
+		MapSqlParameterSource params = new MapSqlParameterSource()
+				.addValue("name", _user.getName())
+				.addValue("gender", _user.getGender())
+				.addValue("email", _user.getEmail())
+				.addValue("address", _user.getAddress())
+				.addValue("id", _id);
+		return this.jdbcTemplate.queryForObject(query, params, this.rowMapper());
 	}
 
 	@Override

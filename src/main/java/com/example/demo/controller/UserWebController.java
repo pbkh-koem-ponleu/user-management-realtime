@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -15,9 +14,12 @@ public class UserWebController {
 	Integer socketIOPort;
 	
 	@RequestMapping("/me/users")
-	public String user(Model model) {
-		model.addAttribute("serverAddress", serverHost);
-		model.addAttribute("socketIOPort", socketIOPort);
+	public String user() {
+		return "tables-basic";
+	}
+	
+	@RequestMapping("/web/users")
+	public String userWeb() {
 		return "users";
 	}
 }

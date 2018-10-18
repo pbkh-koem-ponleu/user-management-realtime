@@ -32,8 +32,8 @@ public class DefaultUserService implements UserService {
 	}
 
 	@Override
-	public User update(int _id) {
-		return null;
+	public User update(Long _id, User _user) {
+		return this.userRepository.update(_id, _user);
 	}
 
 	@Override

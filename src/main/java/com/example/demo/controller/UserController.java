@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,11 @@ public class UserController {
 		User user = new User(id, name, gender, email, address);
 		id++;
 		return userService.create(user);
+	}
+	
+	@PatchMapping("/users/{id}")
+	public User update(@PathVariable Long id, User _user) {
+		return this.userService.update(id, _user);
 	}
 	
 	@DeleteMapping("/users/{id}")
