@@ -14,4 +14,6 @@ public interface UserService {
 	public String delete(int _id);
 	
 	public String deleteUsers();
+	
+	public User login(String _name, String _password);
 }

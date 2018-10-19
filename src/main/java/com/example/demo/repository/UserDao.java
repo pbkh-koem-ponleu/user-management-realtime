@@ -66,6 +66,15 @@ public class UserDao implements UserRepository {
 		return "remove success";
 	}
 
+	@Override
+	public User login(String _name, String _password) {
+		String query = "SELECT * FROM \"user\" WHERE name = :name AND password = :password";
+		MapSqlParameterSource params = new MapSqlParameterSource()
+				.addValue("name", _name)
+				.addValue("password", _password);
+		return this.jdbcTemplate.queryForObject(query, params, this.rowMapper());
+	}
+
 	private RowMapper<User> rowMapper()
 	{
 		return (ResultSet _resultSet, int _rowNum) ->

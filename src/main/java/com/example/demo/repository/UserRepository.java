@@ -14,4 +14,6 @@ public interface UserRepository {
 	public String delete(int _id);
 	
 	public String deleteAll();
+	
+	public User login(String _name, String _password);
 }

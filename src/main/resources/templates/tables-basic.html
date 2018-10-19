@@ -330,6 +330,7 @@
 							            <th>gender</th>
 							            <th>Email</th>
 							            <th>address</th>
+							            <th>message</th>
 							            <th>action</th>
 							          </tr>
 							        </thead>
@@ -393,7 +394,28 @@
     var server = socketAddress+":"+socketIOPort;
     var endpoint = "http://"+serverAddress+":"+serverport;
     var socket =  io.connect(server);
+    var currentUser = null;
+    var sessionId = '';
+    
+    
   $(document).ready(function(){
+	  socket.on('requestEvent', function(data) {
+		  currentUser = data;
+		  $('#message'+currentUser.id).removeClass('disabled');
+	  });
+	  
+	  socket.on('connectedEvent', function(data) {
+		  sessionId = data;
+	  })
+	  
+      var person = prompt("Please enter your name", "");
+      if (person != null) {
+          socket.emit('requestJoin', person, 'ponleu');
+      }
+      
+      socket.on('messageEvent', function(data) {
+    	 alert(data); 
+      });
       
       // $('.dlUser').click(function(){
       //   deleteUser(this.id);
@@ -412,6 +434,7 @@
                 <td class="gender">`+data.gender +`</td>
                 <td class="email">`+data.email +`</td>
                 <td class="address">`+data.address +`</td>
+                <td class="message"><button class="btn btn-success col-md-12 disabled" id="message`+ data.id +`" onClick="message(${sessionId})"><i class="fa fa-send"></i></button></td>
                 <td>
                 <div class="row">
                   <div class="col-md-6">
@@ -481,6 +504,7 @@
                   <td class="gender">`+response[i].gender +`</td>
                   <td class="email">`+response[i].email +`</td>
                   <td class="address">`+response[i].address +`</td>
+                  <td class="message"><button class="btn btn-success col-md-12 disabled" id="message${response[i].id}" onClick="message(${sessionId})"><i class="fa fa-send"></i></button></td>
                   <td>
                     <div class="row">
                       <div class="col-md-6">
@@ -565,7 +589,14 @@
           `;
       $("#footerButton").html($bodyFooter);
   }
-</script>
+  
+  function message(session) {
+	  var message = prompt("Please enter your name", '');
+      if (message != '') {
+    	  socket.emit('sendMessageButton', message);
+      }
+  }
+ </script>
 <script type="text/javascript">
 	$(document).on('click', '.open-popup', function() {
 		  $('.overlay').addClass('shown');

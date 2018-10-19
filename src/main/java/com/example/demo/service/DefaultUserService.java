@@ -53,4 +53,9 @@ public class DefaultUserService implements UserService {
 		return this.userRepository.deleteAll();
 	}
 
+	@Override
+	public User login(String _name, String _password) {
+		return this.userRepository.login(_name, _password);
+	}
+
 }

@@ -27,11 +27,22 @@ public class UserSocketIOController {
 	@OnConnect
 	public void onConnect(SocketIOClient _client) {
 		System.out.println("Connected client: " + _client.getSessionId());
+		this.socketIOServer.getBroadcastOperations().sendEvent("connectedEvent", _client.getSessionId());
 	}
+	
+	
 	
 	@OnDisconnect
 	public void onDisconnect(SocketIOClient _client) {
-		System.out.println("Disconnected client: ");
+		System.out.println("Disconnected client: " + _client.getSessionId());
+	}
+	
+	@OnEvent("requestJoin")
+	public void onRequest(SocketIOClient _client, String _name, String _password, AckRequest _ack) {
+		System.out.println("Connected client: " + _client.getSessionId());
+		System.out.println("user name : " + _name);
+		this.socketIOServer.getBroadcastOperations().sendEvent("requestEvent", userService.login(_name, _password));
+		_ack.sendAckData("join!");
 	}
 	
 	@OnEvent("createUserButton")
@@ -63,5 +74,11 @@ public class UserSocketIOController {
 	public void updateButton(SocketIOClient client, Long _id, User _user, AckRequest _ack) {
 		this.socketIOServer.getBroadcastOperations().sendEvent("updateEvent", userService.update(_id, _user));
 		_ack.sendAckData("update!");
+	}
+	
+	@OnEvent("sendMessageButton")
+	public void sendMessageButton(SocketIOClient client, String _message, String _session, AckRequest _ack) {
+		this.socketIOServer.getBroadcastOperations().sendEvent("messageEvent", _message);
+		_ack.sendAckData("sent!");
 	}
 }
