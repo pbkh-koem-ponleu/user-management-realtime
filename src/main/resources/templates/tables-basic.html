@@ -33,141 +33,141 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Lato:400,700);
-		@import url(http://fontawesome.io/assets/font-awesome/css/font-awesome.css);
-		* {
-		    margin:0px;
-		    padding:0px;
-		}
-		body {
-		    font-size:14px;
-		    font-family: 'Lato', sans-serif;
-		}
-		.layout {
-		    padding: 2%;
-		}
-		.open-popup {
-		    cursor: pointer;
-		    color: #888;
-		}
-		.overlay {
-		    width: 100%;
-		    height: 100%;
-		    position: fixed;
-		    z-index: 100;
-		    left: 0;
-		    top: 0;
-		    text-align: center;
-		    white-space: nowrap;
-		    display:none;
-		    -webkit-transition: all 0.4s ease;
-		    transition: all 0.4s ease;
-		}
-		.overlay .popup {
-		    background: #fff;
-		    display: inline-block;
-		    white-space: normal;
-		    text-align: left;
-		    vertical-align: middle;
-		    position: relative;
-		    -webkit-transition: all 0.4s ease;
-		    transition: all 0.4s ease;
-		    margin-top: -50px;
-		}
-		.overlay::before, .overlay::after {
-		    height: 100%;
-		    content: "";
-		    display: inline-block;
-		    vertical-align: middle;
-		}
-		.overlay.shown {
-		    display:block;
-		}
-		.overlay.shown .popup {
-		    margin-top: 0;
-		}
-		.overlay--bg-black {
-		    background: rgba(0, 0, 0, 0.7);
-		}
-		.overlay--bg-white {
-		    background: rgba(255, 255, 255, 0.7);
-		}
-		.popup-close {
-		    position: absolute;
-		    width: 20px;
-		    height: 20px;
-		    display: block;
-		    top: 8px;
-		    right: 5px;
-		    cursor: pointer;
-		    opacity: 0.7;
-		}
-		.popup-close::before, .popup-close::after {
-		    content: '';
-		    position: absolute;
-		    display: block;
-		    height: 2px;
-		    margin-top: -1px;
-		    top: 50%;
-		    left: 3px;
-		    right: 3px;
-		    background: #555;
-		}
-		.popup-close::before {
-		    -webkit-transform: rotate(45deg);
-		    -ms-transform: rotate(45deg);
-		    transform: rotate(45deg);
-		}
-		.popup-close::after {
-		    -webkit-transform: rotate(-45deg);
-		    -ms-transform: rotate(-45deg);
-		    transform: rotate(-45deg);
-		}
-		.popup-close:hover {
-		    opacity: 1;
-		}
-		.pop_head{
-		    padding: 9px 10px;
-		    background: #00ce91;
-		    color: #fff;
-		    font-weight: 500;
-		}
-		.pop_body {
-		    font-size: 14px;
-		    padding: 10px 10px;
-		    border-bottom: 1px solid #E0E0E0;
-		    overflow: auto;
-		    max-height: 350px;
-		}
-		.text-right{
-		    text-align:right;
-		}
-		.pop_footer {
-		    padding: 5px 10px;
-		}
-		.btn_yes {
-		    background: #81CE84;
-		    padding: 5px 15px;
-		    border: none;
-		    font-family: inherit;
-		    color: #fff;
-		    border-radius: 3px;
-		    cursor: pointer;
-		    outline: none;
-		}
-		.btn_no{
-		    background: #FD7E7E;
-		    padding: 5px 15px;
-		    border: none;
-		    font-family: inherit;
-		    color: #fff;
-		    border-radius: 3px;
-		    cursor: pointer;
-		    outline: none;
-		}
-		
-		.form-margin-20 {
-		  margin-bottom: 20px;
-		}
+        @import url(http://fontawesome.io/assets/font-awesome/css/font-awesome.css);
+        * {
+            margin:0px;
+            padding:0px;
+        }
+        body {
+            font-size:14px;
+            font-family: 'Lato', sans-serif;
+        }
+        .layout {
+            padding: 2%;
+        }
+        .open-popup {
+            cursor: pointer;
+            color: #888;
+        }
+        .overlay {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            text-align: center;
+            white-space: nowrap;
+            display:none;
+            -webkit-transition: all 0.4s ease;
+            transition: all 0.4s ease;
+        }
+        .overlay .popup {
+            background: #fff;
+            display: inline-block;
+            white-space: normal;
+            text-align: left;
+            vertical-align: middle;
+            position: relative;
+            -webkit-transition: all 0.4s ease;
+            transition: all 0.4s ease;
+            margin-top: -50px;
+        }
+        .overlay::before, .overlay::after {
+            height: 100%;
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .overlay.shown {
+            display:block;
+        }
+        .overlay.shown .popup {
+            margin-top: 0;
+        }
+        .overlay--bg-black {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .overlay--bg-white {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .popup-close {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            display: block;
+            top: 8px;
+            right: 5px;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .popup-close::before, .popup-close::after {
+            content: '';
+            position: absolute;
+            display: block;
+            height: 2px;
+            margin-top: -1px;
+            top: 50%;
+            left: 3px;
+            right: 3px;
+            background: #555;
+        }
+        .popup-close::before {
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        .popup-close::after {
+            -webkit-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+        .popup-close:hover {
+            opacity: 1;
+        }
+        .pop_head{
+            padding: 9px 10px;
+            background: #00ce91;
+            color: #fff;
+            font-weight: 500;
+        }
+        .pop_body {
+            font-size: 14px;
+            padding: 10px 10px;
+            border-bottom: 1px solid #E0E0E0;
+            overflow: auto;
+            max-height: 350px;
+        }
+        .text-right{
+            text-align:right;
+        }
+        .pop_footer {
+            padding: 5px 10px;
+        }
+        /* .btn_yes {
+            background: #81CE84;
+            padding: 5px 15px;
+            border: none;
+            font-family: inherit;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            outline: none;
+        }
+        .btn_no{
+            background: #FD7E7E;
+            padding: 5px 15px;
+            border: none;
+            font-family: inherit;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            outline: none;
+        } */
+        
+        .form-margin-20 {
+          margin-bottom: 20px;
+        }
     </style>
 
 </head>
@@ -313,50 +313,49 @@
                             <div class="card-header">
                                <div class="row">
                                 <div class="col-md-8"><strong class="card-title">User Management Realtime</strong></div>
-                                 <div class="col-md-2 col-sm-2">
-                                     <button class="btn btn-success col-md-12 open-popup" id="createUser" data-toggle="modal" data-target="#upModal"><i class="fa fa-plus"></i></button>
-                                 </div>
-                                 <div class="col-md-2 col-sm-2">
-                                     <button class="btn btn-danger col-md-12" id="removeAll"><i class="fa fa-trash"></i> All</button>
-                                 </div>
+                                <div class="col-md-4 text-right">
+                                     <button type="button" class="btn btn-outline-warning open-popup" id="createUser" data-toggle="modal" data-target="#upModal"><i class="fa fa-plus"></i>&nbsp; CREATE</button>
+                                     <button type="button" class="btn btn-outline-danger" id="removeAll"><i class="fa fa-trash"></i>&nbsp; ALL</button>
+                                </div>
                                </div>
                             </div>
                             <div class="table-stats order-table ov-h">
                                 <table class="table">
-							        <thead>
-							          <tr>
-							            <th>id</th>
-							            <th>name</th>
-							            <th>gender</th>
-							            <th>Email</th>
-							            <th>address</th>
-							            <th>message</th>
-							            <th>action</th>
-							          </tr>
-							        </thead>
-							        <tbody id="users">
-							        </tbody>
-							      </table>
+                                    <thead>
+                                      <tr>
+                                        <th>id</th>
+                                        <th>name</th>
+                                        <th>gender</th>
+                                        <th>Email</th>
+                                        <th>address</th>
+                                        <th>created date</th>
+                                        <th>message</th>
+                                        <th>action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="users">
+                                    </tbody>
+                                  </table>
                         </div>
                     </div>
                 </div>
                 <!-- modal popup when create and update user -->
-				<div class="overlay overlay--bg-black">
-				  <section class="popup" style="width: 40%;"> 
-				        <span class="popup-close"></span> 
-				        <h3 class="pop_head">USER</h3>
-				        <div class="pop_body container">
-				            <div  id="modalUserData" class="container">
-				            
-				            </div>
-				            <!-- when create or update will generate HTML form here -->
-				        </div>
-				        <div class="pop_footer text-right" id="footerButton">
-				                <!-- when create or update will generate HTML button here -->
-				        </div>
-				  </section>
-				</div>
-				<!-- end modal popup when create and update user -->
+                <div class="overlay overlay--bg-black">
+                  <section class="popup" style="width: 40%;"> 
+                        <span class="popup-close"></span> 
+                        <h3 class="pop_head">USER</h3>
+                        <div class="pop_body container">
+                            <div  id="modalUserData" class="container">
+                            
+                            </div>
+                            <!-- when create or update will generate HTML form here -->
+                        </div>
+                        <div class="pop_footer text-right" id="footerButton">
+                                <!-- when create or update will generate HTML button here -->
+                        </div>
+                  </section>
+                </div>
+                <!-- end modal popup when create and update user -->
         </div>
     </div><!-- .animated -->
 </div><!-- .content -->
@@ -395,26 +394,44 @@
     var endpoint = "http://"+serverAddress+":"+serverport;
     var socket =  io.connect(server);
     var currentUser = null;
-    var sessionId = '';
+    var sessionId =  socket.io.engine.id;
+    var allClients = socket.io.engine.clients;
+    console.log(" all   " + allClients);
+    
     
     
   $(document).ready(function(){
-	  socket.on('requestEvent', function(data) {
-		  currentUser = data;
-		  $('#message'+currentUser.id).removeClass('disabled');
-	  });
-	  
-	  socket.on('connectedEvent', function(data) {
-		  sessionId = data;
-	  })
-	  
-      var person = prompt("Please enter your name", "");
-      if (person != null) {
-          socket.emit('requestJoin', person, 'ponleu');
-      }
+      socket.on('connectedEvent', function(data) {
+          sessionId = data;
+      });
+      
+      socket.on('disconnect', function() {
+    	  var i = document.getElementById('message'+currentUser);
+          session1 = i.getAttribute('name');
+          console.log(session1 + "=========="+sessionId);
+        });
+      
+      var name = window.prompt("sometext","");
+      
+      socket.emit('requestJoin', name, 'ponleu');
+      
+      socket.on('requestEvent', function(data) {
+          currentUser = data;
+          console.log(currentUser);
+          var userId = 'message'+currentUser.id;
+          var i = document.getElementById(userId);
+          i.classList.remove('disabled');
+          i.setAttribute('name', sessionId);
+      });
+      
+      
+      
       
       socket.on('messageEvent', function(data) {
-    	 alert(data); 
+          console.log(data + " == " + socket.io.engine.id);
+         // if (data == socket.io.engine.id) {
+             alert("hi "); 
+         // }
       });
       
       // $('.dlUser').click(function(){
@@ -429,21 +446,16 @@
       socket.on('createUserEvent', function(data) {
           $body = `
               <tr id="user${data.id}">
-                <td class="id">`+data.id +`</td>
-                <td class="name">`+data.name +`</td>
-                <td class="gender">`+data.gender +`</td>
-                <td class="email">`+data.email +`</td>
-                <td class="address">`+data.address +`</td>
-                <td class="message"><button class="btn btn-success col-md-12 disabled" id="message`+ data.id +`" onClick="message(${sessionId})"><i class="fa fa-send"></i></button></td>
+                <td class="id">${data.id}</td>
+                <td class="name">${data.name}</td>
+                <td class="gender">${data.gender}</td>
+                <td class="email">${data.email}</td>
+                <td class="address">${data.address}</td>
+                <td class="address">${data.created_at}</td>
+                <td class="message"><button type="button" class="btn btn-outline-primary disabled" id="message${data.id}" onClick="message(${data.id})"><i class="fa fa-send"></i></button></td>
                 <td>
-                <div class="row">
-                  <div class="col-md-6">
-                    <button class="btn btn-success col-md-12 upUser open-popup" data-toggle="modal" data-target="#upModal" onClick="openModalUpdate(`+ data.id +`)" id="up`+ data.id +`"><i class="fa fa-edit"></i></button>
-                  </div>
-                  <div class="col-md-6">
-                    <button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ data.id +`)" id="dl`+ data.id +`"><i class="fa fa-trash"></i></button>
-                  </div>
-                </div>
+                <button type="button" class="btn btn-outline-warning upUser open-popup" data-toggle="modal" data-target="#upModal" onClick="openModalUpdate(${data.id})" id="up`+ data.id +`"><i class="fa fa-edit"></i>&nbsp; Edit</button>
+                    <button type="button" class="btn btn-outline-danger dlUser" onClick="deleteUser(${data.id})" id="dl${data.id}"><i class="fa fa-trash"></i>&nbsp; Remove</button>
                 </td>
               </tr>
             `;
@@ -480,11 +492,9 @@
           $(`#user${data.id} .email`).html(data.email);
           $(`#user${data.id} .address`).html(data.address);
     });
-      
-      
   });
-  
   get();
+  
   
   function get() {
       $.ajax({
@@ -499,21 +509,16 @@
             for(i = 0; i<response.length; i++) {
               $body = `
                     <tr id="user${response[i].id}">
-                  <td class="id">`+response[i].id +`</td>
-                  <td class="name">`+response[i].name +`</td>
-                  <td class="gender">`+response[i].gender +`</td>
-                  <td class="email">`+response[i].email +`</td>
-                  <td class="address">`+response[i].address +`</td>
-                  <td class="message"><button class="btn btn-success col-md-12 disabled" id="message${response[i].id}" onClick="message(${sessionId})"><i class="fa fa-send"></i></button></td>
+                  <td class="id">${response[i].id}</td>
+                  <td class="name">${response[i].name}</td>
+                  <td class="gender">${response[i].gender}</td>
+                  <td class="email">${response[i].email}</td>
+                  <td class="address">${response[i].address}</td>
+                  <td class="address">${response[i].created_at}</td>
+                  <td class="message"><button type="button" class="btn btn-outline-primary disabled" name="${socket.io.engine.id}" id="message${response[i].id}" onClick="message(${response[i].id})"><i class="fa fa-send"></i></button></td>
                   <td>
-                    <div class="row">
-                      <div class="col-md-6">
-                          <button class="btn btn-success col-md-12 upUser open-popup" onClick="openModalUpdate(${response[i].id})" id="up${response[i].id}"><i class="fa fa-edit"></i></button>
-                      </div>
-                      <div class="col-md-6">
-                          <button class="btn btn-danger col-md-12 dlUser" onClick="deleteUser(`+ response[i].id +`)" id="dl`+ response[i].id +`"><i class="fa fa-trash"></i></button>
-                      </div>
-                    </div>
+	                    <button type="button" class="btn btn-outline-warning upUser open-popup" onClick="openModalUpdate(${response[i].id})" id="up${response[i].id}"><i class="fa fa-edit"></i>&nbsp; Edit</button>
+	                    <button type="button" class="btn btn-outline-danger dlUser" onClick="deleteUser(${response[i].id})" id="dl${response[i].id}"><i class="fa fa-trash"></i>&nbsp; Remove</button>
                   </td>
                     </tr>
                   `;
@@ -552,13 +557,14 @@
         name: name,
         gender: gender,
         email: email,
-        address: address
+        address: address,
+        password: 'ponleu'
       };
       socket.emit('createUserButton', $user);
   }
   
   function openModalUpdate(id) {
-	  console.log(id);
+      console.log(id);
       name = '';
       gender = '';
       email = '';
@@ -575,44 +581,47 @@
           `
             <input type="text" id="name" class="form-control form-margin-20" placeholder="name" value="${name}">
             <select class="form-control form-margin-20" id="gender">
-	            <option selected>${selectedGender}</option>
-	            <option >${notSelectedGender}</option>
-	          </select>
+                <option selected>${selectedGender}</option>
+                <option >${notSelectedGender}</option>
+              </select>
             <input type="text" id="email" class="form-control form-margin-20" placeholder="email" value="${email}">
             <input type="text" id="address" class="form-control form-margin-20" placeholder="address" value="${address}">
           `;
         $("#modalUserData").html($body);
       $bodyFooter =
           `
-          <button type="button" class="btn btn-success btn_yes col-sm-1" id="${id}==null?createUserBtn:upUser" onClick="${id}==null?createUser():upUser(${id})"><i class="fa fa-edit"></i></button>
-          <button type="button" class="btn btn-default btn_no col-sm-1"><i class="fa fa-close"></i></button>
+          <button type="button" class="btn btn-outline-warning btn_yes col-sm-1" id="${id}==null?createUserBtn:upUser" onClick="${id}==null?createUser():upUser(${id})"><i class="fa fa-edit"></i></button>
+          <button type="button" class="btn btn-outline-danger btn_no col-sm-1"><i class="fa fa-close"></i></button>
           `;
       $("#footerButton").html($bodyFooter);
   }
   
-  function message(session) {
-	  var message = prompt("Please enter your name", '');
+  function message(id) {
+      var message = prompt("Please enter your name", 'hi');
+      var userId = 'message'+id;
+      var i = document.getElementById(userId);
+      session = i.getAttribute('name');
       if (message != '') {
-    	  socket.emit('sendMessageButton', message);
+          socket.emit('sendMessageButton', session, message);
       }
   }
  </script>
 <script type="text/javascript">
-	$(document).on('click', '.open-popup', function() {
-		  $('.overlay').addClass('shown');
-		});
-	
-		$('.popup-close').on('click', function() {
-		  $('.overlay').removeClass('shown');
-		});
-		$(document).on('click', '.btn_yes, .btn_no', function(event) {
-		  $('.overlay').removeClass('shown');
-		});
-		$(document).on('keyup', function(event) {
-		  if (event.which == 27) { // esc
-		    $('.overlay').removeClass('shown');
-		  };
-		});
+    $(document).on('click', '.open-popup', function() {
+          $('.overlay').addClass('shown');
+        });
+    
+        $('.popup-close').on('click', function() {
+          $('.overlay').removeClass('shown');
+        });
+        $(document).on('click', '.btn_yes, .btn_no', function(event) {
+          $('.overlay').removeClass('shown');
+        });
+        $(document).on('keyup', function(event) {
+          if (event.which == 27) { // esc
+            $('.overlay').removeClass('shown');
+          };
+        });
 </script>
 
 </body>

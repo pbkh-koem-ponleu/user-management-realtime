@@ -27,4 +27,16 @@ public class UserWebController {
 	public String userWeb() {
 		return "users";
 	}
+	
+	@RequestMapping("/chat")
+	public String chat()
+	{
+		return "chat";
+	}
+	
+	@RequestMapping("/user/login")
+	public String login()
+	{
+		return "login";
+	}
 }

@@ -55,7 +55,12 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	public User login(String _name, String _password) {
-		return this.userRepository.login(_name, _password);
+		try {
+			return this.userRepository.login(_name, _password);
+		} catch (Exception e) {
+			User user = new User(null, "annonymouse", null, null, null);
+			return user;
+		}
 	}
 
 }
